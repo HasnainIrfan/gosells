@@ -1,91 +1,136 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+"use client";
+import Head from "next/head";
+import Script from "next/script";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [goSellLoaded, setGoSellLoaded] = useState(false);
+
+  useEffect(() => {
+    setGoSellLoaded(false);
+    const script = document.createElement("script");
+    script.src = "https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js";
+    script.async = true;
+    script.onload = () => {
+      setGoSellLoaded(true);
+    };
+    document.body.appendChild(script);
+  }, []);
+
+  const handleSave = () => {
+    if (goSellLoaded) {
+      goSell.config({
+        gateway: {
+          publicKey: "pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
+          merchant_id: "1124340",
+          language: "en",
+          contactInfo: false,
+          supportedCurrencies: "all",
+          supportedPaymentMethods: "all",
+          saveCardOption: true,
+          customerCards: true,
+          notifications: "standard",
+          callback: (response) => {
+            console.log("callback", response);
+          },
+          onClose: (response) => {
+            console.log("onclose hey", response);
+          },
+          onLoad: (response) => {
+            console.log("onLoad", response);
+            goSell.openLightBox();
+          },
+          style: {
+            base: {
+              color: "red",
+              lineHeight: "10px",
+              fontFamily: "sans-serif",
+              fontSmoothing: "antialiased",
+              fontSize: "10px",
+              "::placeholder": {
+                color: "rgba(0, 0, 0, 0.26)",
+                fontSize: "10px",
+              },
+            },
+            invalid: {
+              color: "red",
+              iconColor: "#fa755a ",
+            },
+          },
+        },
+        customer: {
+          first_name: "hala",
+          middle_name: "",
+          last_name: "",
+          email: "test@test.com",
+          phone: {
+            country_code: "+965",
+            number: "00000000",
+          },
+        },
+        order: {
+          amount: document.getElementById("amount").value,
+          currency: "SAR",
+          items: [
+            {
+              id: 0,
+              name: "Item ",
+              description: "Item Desc 0",
+              old_quantity: 1,
+              quantity: 1,
+              amount_per_unit: 0,
+              old_total_amount: 0,
+              total_amount: 10,
+            },
+          ],
+        },
+        transaction: {
+          mode: "charge",
+          charge: {
+            auto: {
+              time: 100,
+              type: "VOID",
+            },
+            saveCard: false,
+            threeDSecure: true,
+            description: "description",
+            statement_descriptor: "statement_descriptor",
+            reference: {
+              transaction: "txn_0001",
+              order: "ord_0001",
+            },
+            metadata: {},
+            receipt: {
+              email: false,
+              sms: true,
+            },
+            redirect: "http://localhost:3000/payment",
+            post: null,
+          },
+        },
+      });
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <>
+      <Head>
+        <link
+          rel="shortcut icon"
+          href="https://goSellJSLib.b-cdn.net/v2.0.0/imgs/tap-favicon.ico"
+          // integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossOrigin="anonymous"
         />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+        <link
+          href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
+          rel="stylesheet"
+          crossOrigin="anonymous"
+        />
+      </Head>
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      <div id="root"></div>
+      <input type="number" id="amount" name="amount" />
+      <button onClick={handleSave}>Checkouts</button>
+    </>
+  );
 }
