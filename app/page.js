@@ -35,7 +35,7 @@ export default function Home() {
           },
           onClose: (response) => {
             console.log("onclose hey", response);
-          },
+          },x
           onLoad: (response) => {
             console.log("onLoad", response);
             goSell.openLightBox();
@@ -104,7 +104,7 @@ export default function Home() {
               email: false,
               sms: true,
             },
-            redirect: "http://localhost:3001/payment",
+            redirect: "https://gosell.vercel.app/payment",
             post: null,
           },
         },
