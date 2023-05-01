@@ -21,8 +21,8 @@ export default function Home() {
     if (goSellLoaded) {
       goSell.config({
         gateway: {
-          publicKey: "pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
-          merchant_id: "1124340",
+          publicKey: "pk_test_MkujZ29Ss5DRA8aIFJPhdrgm",
+          merchant_id: "6956502",
           language: "en",
           contactInfo: false,
           supportedCurrencies: "all",
@@ -104,7 +104,7 @@ export default function Home() {
               email: false,
               sms: true,
             },
-            redirect: "http://localhost:3000/payment",
+            redirect: "http://localhost:3001/payment",
             post: null,
           },
         },
