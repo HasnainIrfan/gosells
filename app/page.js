@@ -21,7 +21,7 @@ export default function Home() {
     if (goSellLoaded) {
       goSell.config({
         gateway: {
-          publicKey: "pk_test_MkujZ29Ss5DRA8aIFJPhdrgm",
+          publicKey: "pk_live_ivmefwcEOlKjQg80DoJUs5M3",
           merchant_id: "6956502",
           language: "en",
           contactInfo: false,
