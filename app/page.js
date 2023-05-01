@@ -35,7 +35,7 @@ export default function Home() {
           },
           onClose: (response) => {
             console.log("onclose hey", response);
-          },x
+          },
           onLoad: (response) => {
             console.log("onLoad", response);
             goSell.openLightBox();
